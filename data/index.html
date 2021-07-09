@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrador</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body onload="GetArduinoInputs()">
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h3></h3>
+			<h3 style="text-align: center; color:#6e675e">Administración de Estados </h3>
+			<div id="card-1">
+				<div class="card">
+					<div class="card-header"  data-toggle="collapse" data-parent="#card-1" href="#card-element-0" onclick="color(this)">
+						<a class="card-link collapsed h3">Luz Garage</a>
+						<span class="text-danger h3" id="spanin0">OFF</span>
+						<span class="text-primary h3" id="spanmed0">3</span>						 
+					</div>
+					<div id="card-element-0" class="collapse" data-parent="#card-1">
+						<div class="card-body" style="padding-left: 10px">
+							<h6></h6>
+							<button class="btn btn-danger btn-lg" onclick="off(this)">OFF</button>
+							<button class="btn btn-success btn-lg" onclick="on(this)">ON</button>
+							<h6></h6>
+							<div>
+								<button class="btn btn-primary btn-lg" onclick="set(this,ranin0.value)">SET</button>
+								<input type="range" min="1" max="10" value="3" class="slider" id="ranin0" onchange="show_value(this, this.value)">
+								<span class="text-primary font-weight-bold h3" id="valin0">3</span>
+								<h6></h6>
+							</div>
+						</div>
+					</div>
+				</div>				
+				<div class="card">
+					<div class="card-header" data-toggle="collapse" data-parent="#card-1" href="#card-element-1" onclick="color(this)">
+						<a class="card-title collapsed h3" >Luz Frente</a>
+						<span class="text-success h3" id="spanin1">ON</span>
+						<span class="text-primary h3" id="spanmed1" >10</span>
+					</div>
+					<div id="card-element-1" class="collapse" data-parent="#card-1">
+						<div class="card-body" style="padding-left: 10px">
+							<h6></h6>
+							<button class="btn btn-danger btn-lg" onclick="off(this)">OFF</button>
+							<button class="btn btn-success btn-lg" onclick="on(this)">ON</button>
+							<h6></h6>
+							<div><button class="btn btn-primary btn-lg" onclick="set(this,ranin1.value)">SET</button>
+								<input type="range" min="1" max="10" value="10" class="slider" id="ranin1" onchange="show_value(this, this.value)">
+								<span class="text-primary font-weight-bold h3" id="valin1">10</span>
+								<h6></h6>
+							</div>
+						</div>
+
+					</div>
+					</div>
+				<div class="card">
+					<div class="card-header" data-toggle="collapse" data-parent="#card-1" href="#card-element-2" onclick="color(this)">
+						<a class="card-link collapsed h3" >Luz Pasillo</a>
+						 <span class="text-danger h3" id="spanin2">OFF</span>
+						 <span class="text-primary h3" id="spanmed2">5</span>
+					</div>
+					<div id="card-element-2" class="collapse" data-parent="#card-1">
+						<div class="card-body" style="padding-left: 10px">
+							<h6></h6>
+							<button class="btn btn-danger btn-lg" onclick="off(this)">OFF</button>
+							<button class="btn btn-success btn-lg" onclick="on(this)">ON</button>
+							<h6></h6>
+							<div>
+								<button class="btn btn-primary btn-lg" onclick="set(this,ranin2.value)">SET</button>
+								<input type="range" min="1" max="10" value="5" class="slider"  id="ranin2" onchange="show_value(this, this.value)">
+								<span class="text-primary font-weight-bold h3" id="valin2">5</span>
+								<h6></h6>
+							</div>
+						</div>
+					</div>
+				</div>					
+				<div class="card">
+					<div class="card-header"  data-toggle="collapse" data-parent="#card-1" href="#card-element-3" onclick="color(this)">
+						<a class="card-link collapsed h3">Luz Patio</a>
+						<span class="text-success h3" id="spanin3">ON</span>
+						<span class="text-primary h3" id="spanmed3">2</span>
+					</div>
+					<div id="card-element-3" class="collapse" data-parent="#card-1">
+						<div class="card-body" style="padding-left: 10px">
+							<h6></h6>
+							<button class="btn btn-danger btn-lg" onclick="off(this)">OFF</button>
+							<button class="btn btn-success btn-lg" onclick="on(this)">ON</button>
+							<h6></h6>
+							<div><button class="btn btn-primary btn-lg" onclick="set(this,ranin3.value)">SET</button>
+								<input type="range" min="1" max="10" value="2" class="slider" id="ranin3" onchange="show_value(this, this.value)">
+								<span class="text-primary font-weight-bold h3" id="valin3">2</span>
+							<h6></h6>
+							</div>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>
+	</div>
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+	<script>
+	function GetArduinoInputs(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var myArr = JSON.parse(this.responseText);
+			
+			document.getElementById("spanin0").innerHTML = arr.in0;
+			document.getElementById("spanin1").innerHTML = arr.in1;
+			document.getElementById("spanin2").innerHTML = arr.in2;
+			document.getElementById("spanin3").innerHTML = arr.in3;
+		}
+		};
+		xhttp.open("GET", "/estado", true);
+		xhttp.send();		
+	}
+	function show_value(elemento,valor){
+		elemento.nextElementSibling.innerHTML = valor
+	}
+	
+	function on(e){
+		var elemento = e.parentNode.parentNode.previousElementSibling.lastElementChild.previousElementSibling
+		elemento.innerHTML = "ON";
+		elemento.className = "text-success h3";
+		var entrada = elemento.id.slice(-1);
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/on?in="+entrada, true);
+		xhr.send();
+		
+	}
+	
+	function off(e){
+		var elemento = e.parentNode.parentNode.previousElementSibling.lastElementChild.previousElementSibling
+		elemento.innerHTML = "OFF";
+		elemento.className = "text-danger h3";
+		var xhr = new XMLHttpRequest();
+		var entrada = elemento.id.slice(-1);
+		xhr.open("GET", "/off?in="+entrada, true);
+		xhr.send();
+	}
+	
+	function set(e,valor){
+		var elemento = e.parentNode.parentNode.parentNode.previousElementSibling.lastElementChild
+		elemento.innerHTML = valor
+		var xhr = new XMLHttpRequest();
+		var entrada = elemento.id.slice(-1);
+		xhr.open("GET", "/set?in="+entrada+"&value="+valor, true);
+		xhr.send();		
+		
+	}
+	
+	function color(elemento){
+		var acc = document.getElementsByClassName("card-header");
+		var i;
+		for (i = 0; i < acc.length; i++) {
+			acc[i].style.backgroundColor = "#f7f7f9";
+		};
+		elemento.style.backgroundColor = "#f8fff0";
+	};
+	
+	setInterval(function ( ) {
+	GetArduinoInputs();
+	}, 10000 ) ;
+	</script>
+  </body>
+</html>
